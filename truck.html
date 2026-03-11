@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Truck Details</title>
 
@@ -16,20 +17,43 @@
 
 <div class="container">
 
-<div class="details">
-
-<h2>TN52AB1023</h2>
-
-<p><b>Model:</b> Tata 2518</p>
-<p><b>Driver:</b> Ramesh Kumar</p>
-<p><b>Status:</b> Moving</p>
-<p><b>Speed:</b> 34 km/h</p>
-<p><b>Fuel:</b> 72%</p>
-<p><b>Last Location:</b> Pit Area 3</p>
+<div id="details" class="details"></div>
 
 </div>
 
-</div>
+<script src="data.js"></script>
+
+<script>
+
+const params=new URLSearchParams(window.location.search)
+
+const mine=params.get("mine")
+
+const truck=params.get("truck")
+
+const t=mines[mine][truck]
+
+document.getElementById("details").innerHTML=`
+
+<h2>${t.num}</h2>
+
+<p><b>Mine:</b> ${mine}</p>
+
+<p><b>Model:</b> ${t.model}</p>
+
+<p><b>Driver:</b> ${t.driver}</p>
+
+<p><b>Status:</b> ${t.status}</p>
+
+<p><b>Speed:</b> ${Math.floor(Math.random()*60)} km/h</p>
+
+<p><b>Fuel:</b> ${Math.floor(Math.random()*100)}%</p>
+
+<p><b>Last Location:</b> Pit Area ${Math.floor(Math.random()*5)}</p>
+
+`
+
+</script>
 
 </body>
 </html>

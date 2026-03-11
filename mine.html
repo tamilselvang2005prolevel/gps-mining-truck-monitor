@@ -24,31 +24,64 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 
 <div id="map"></div>
 
-<h2>Truck List</h2>
+<h2>Trucks</h2>
 
-<div class="grid">
-
-<a href="truck.html?truck=TN52AB1023" class="card">
-<h3>TN52AB1023</h3>
-<p>Tata 2518</p>
-</a>
-
-<a href="truck.html?truck=TN52AB3321" class="card">
-<h3>TN52AB3321</h3>
-<p>Ashok Leyland</p>
-</a>
-
-<a href="truck.html?truck=TN52AB8765" class="card">
-<h3>TN52AB8765</h3>
-<p>BharatBenz</p>
-</a>
-
-</div>
+<div id="truckList" class="grid"></div>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="script.js"></script>
+
+<script src="data.js"></script>
+
+<script>
+
+const params=new URLSearchParams(window.location.search)
+
+const mine=params.get("mine")
+
+document.getElementById("mineTitle").innerText=mine+" Truck Monitoring"
+
+const trucks=mines[mine]
+
+const list=document.getElementById("truckList")
+
+trucks.forEach((t,i)=>{
+
+list.innerHTML+=`
+
+<a href="truck.html?mine=${mine}&truck=${i}" class="card">
+
+<h3>${t.num}</h3>
+
+<p>${t.model}</p>
+
+</a>
+
+`
+
+})
+
+
+/* MAP */
+
+var map=L.map('map').setView([11.6643,78.1460],13)
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:19
+}).addTo(map)
+
+trucks.forEach((t,i)=>{
+
+let lat=11.66+Math.random()*0.02
+let lon=78.14+Math.random()*0.02
+
+L.marker([lat,lon]).addTo(map)
+.bindPopup(t.num)
+
+})
+
+</script>
 
 </body>
 </html>
